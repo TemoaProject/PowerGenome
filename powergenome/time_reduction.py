@@ -320,9 +320,31 @@ def kmeans_time_clustering(
     resource_df = pd.DataFrame(
         columns=resource_col_names, index=final_output_data.index
     )
+
+    seg_frac_period_weights = time_series_mapping[['Period_Index','Rep_Period']].groupby(by='Rep_Period').sum()
+    seg_frac_period_weights = seg_frac_period_weights['Period_Index']/seg_frac_period_weights['Period_Index'].sum()
+    slot_periods = int(len(final_output_data)/len(seg_frac_period_weights))
+    start_val = 0
+    df_segfrac = pd.DataFrame(index = final_output_data.index, columns=['segfrac'])
+    for i in np.arange(len(seg_frac_period_weights)):
+        mask = np.arange(start_val,start_val+slot_periods,1)
+        df_segfrac.loc[mask, 'segfrac'] = seg_frac_period_weights.iloc[i]/slot_periods
+        start_val += slot_periods
+
     for col in resource_col_names:
         try:
             resource_df[col] = final_output_data.loc[:, col].values
+            #scale capacity factors of renewables so that they match annual averages
+            epsilon = 0.005
+            data_mean = resource_profiles[col].mean()
+            while True:
+                sample_mean = np.average(resource_df[col].values, weights=df_segfrac['segfrac'].values)
+                scalar = data_mean/sample_mean
+                resource_df[col] *= scalar
+                resource_df[col] = resource_df[col].clip(upper=1.0)
+                sample_mean = np.average(resource_df[col].values, weights=df_segfrac['segfrac'].values)
+                if abs(sample_mean - data_mean) <= epsilon:
+                    break
         except KeyError:
             pass
     resource_df = resource_df.fillna(value=1)
