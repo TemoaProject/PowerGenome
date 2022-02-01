@@ -203,13 +203,14 @@ def kmeans_time_clustering(
             )
 
     # appending the week representing peak load
-    time_series_mapping = time_series_mapping.append(
-        pd.DataFrame(
-            {"Period_Index": int(GroupingwithPeakLoad[0][1:]), "Rep_Period": k + 2},
-            index=[0],
-        ),
-        ignore_index=True,
-    )
+    if include_peak_day: #Checking if include_peak_day is true
+        time_series_mapping = time_series_mapping.append(
+            pd.DataFrame(
+                {"Period_Index": int(GroupingwithPeakLoad[0][1:]), "Rep_Period": k + 2},
+                index=[0],
+            ),
+            ignore_index=True,
+        )
 
     # same CSV file that will be used in GenX
     time_series_mapping = time_series_mapping.sort_values(by=["Period_Index"])
