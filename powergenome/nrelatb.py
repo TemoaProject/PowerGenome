@@ -718,9 +718,9 @@ def atb_fixed_var_om_existing(
             mod_results["Fixed_OM_Cost_per_MWyr"].isna(), "Fixed_OM_Cost_per_MWyr"
         ] = mod_results["Fixed_OM_Cost_per_MWyr"].mean()
     # mod_results = mod_results.sort_values(["model_region", "technology", "cluster"])
-    mod_results.loc[:, "Fixed_OM_Cost_per_MWyr"] = mod_results.loc[
-        :, "Fixed_OM_Cost_per_MWyr"
-    ].astype(int)
+    # mod_results.loc[:, "Fixed_OM_Cost_per_MWyr"] = mod_results.loc[
+    #     :, "Fixed_OM_Cost_per_MWyr"
+    # ].astype(int)
     mod_results.loc[:, "Var_OM_Cost_per_MWh"] = mod_results.loc[
         :, "Var_OM_Cost_per_MWh"
     ]
