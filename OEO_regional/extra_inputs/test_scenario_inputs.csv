@@ -1,0 +1,8 @@
+﻿case_id,year,demand_response,growth,tx_expansion,ng_price,ccs_capex,renewable_capex,nuclear_capex,conv_hydro_rps_eligible,ca_nuclear_allowed,electrification
+p6,2020,moderate,normal,high,reference,mid,mid,mid,no,yes,reference
+p6,2025,moderate,normal,high,reference,mid,mid,mid,no,yes,reference
+p6,2030,moderate,normal,high,reference,mid,mid,mid,no,yes,reference
+p6,2035,moderate,normal,high,reference,mid,mid,mid,no,yes,reference
+p6,2040,moderate,normal,high,reference,mid,mid,mid,no,yes,reference
+p6,2045,moderate,normal,high,reference,mid,mid,mid,no,yes,reference
+p6,2050,moderate,normal,high,reference,mid,mid,mid,no,yes,reference
